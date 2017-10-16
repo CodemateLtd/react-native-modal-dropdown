@@ -37,6 +37,7 @@ export default class ModalDropdown extends Component {
     animated: PropTypes.bool,
     showsVerticalScrollIndicator: PropTypes.bool,
     keyboardShouldPersistTaps: PropTypes.string,
+    closeOnSelect: PropTypes.bool,
 
     style: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     textStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
@@ -60,7 +61,8 @@ export default class ModalDropdown extends Component {
     options: null,
     animated: true,
     showsVerticalScrollIndicator: true,
-    keyboardShouldPersistTaps: 'never'
+    keyboardShouldPersistTaps: 'never',
+    closeOnSelect: true
   };
 
   constructor(props) {
@@ -362,8 +364,9 @@ export default class ModalDropdown extends Component {
         selectedIndex: rowID
       });
     }
-    if (!this.props.onDropdownWillHide ||
-      this.props.onDropdownWillHide() !== false) {
+    if (this.props.closeOnSelect &&
+      (!this.props.onDropdownWillHide ||
+      this.props.onDropdownWillHide() !== false)) {
       this.setState({
         showDropdown: false
       });
